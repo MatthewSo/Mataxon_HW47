@@ -2,6 +2,7 @@ Ball[] balls;
 int x;
 boolean cl = true;
   void setup(){
+    stroke(0);
     background(0);
     balls = new Ball[25];
     for(int i= 0; i < 25; i++){
@@ -20,11 +21,11 @@ boolean cl = true;
         for(int i = 0; i < 25; i++){
           
          fill(0);
-        ellipse((float)balls[i].getXcor(), (float)balls[i].getYcor(), (float)balls[i].getRadius(), (float)balls[i].getRadius());
+        ellipse((float)balls[i].getXcor(), (float)balls[i].getYcor(), (float)balls[i].getRadius()+.75, (float)balls[i].getRadius()+.75);
         for (int j = 0; j < 25; j++){
-          if(balls[j].getState() == 1|| balls[j].getState() ==3){
-            if(balls[i].getState() != 1 && balls[i].getState() != 3){
-            if(balls[i].getXcor() + balls[i].getRadius() == balls[j].getXcor() + balls[j].getRadius() || balls[i].getYcor() + balls[i].getRadius() == balls[j].getYcor() + balls[j].getRadius()){
+          if((balls[j].getState() == 1|| balls[j].getState() ==3) && balls[j] != balls[i]){
+            if(balls[i].getState() != 1 && balls[i].getState() != 3 && balls[i].getState() != 2){
+            if(balls[i].isTouching(balls[j])){
               balls[i].setState(1);
             }
           }
@@ -41,6 +42,7 @@ boolean cl = true;
     }
 void settings(){
  size(600, 600);
+ 
 }
 
 void mousePressed(){

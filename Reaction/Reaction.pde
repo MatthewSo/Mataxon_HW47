@@ -9,8 +9,8 @@ class Ball{
  public Ball(){
    c = color((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
    radius = 40;
-   xspeed = (int)(Math.random() * 10 + 1);
-   yspeed = (int)(Math.random()* 10 + 1);
+   xspeed = (int)(Math.random() * 4 + 1);
+   yspeed = (int)(Math.random()* 4 + 1);
    xcor = (int)(Math.random()* 580 + 10);
    ycor = (int)(Math.random()* 580 + 10);
    state = 0;
@@ -52,25 +52,33 @@ public int getState(){
 
 
 public void grow(){
-  if (radius > 99){
+  if (state == 2){
+    return;
+  }
+  
+  if (radius > 100){
     state = 3;
   }
   if (state == 1){
+    xspeed = 0;
+    yspeed = 0;
     grower();
   }else if(state == 3){
     shrink();
   }
 }
  public void grower(){
-   if(this.radius < 100){
+   if(this.radius < 101){
      radius = radius + 1;
    }
  }
  
  public void shrink(){
-   if(this.radius > 0){
+   if(this.radius > 1){
      radius = radius - 1;
-   }
+   }else{
+     state = 2;
+ }
  }
  
   public void bounce(){
@@ -81,6 +89,13 @@ public void grow(){
      yspeed = -1 * yspeed;
    }//end if
  }
+ 
+ public boolean isTouching(Ball x){
+   float distance = dist(xcor,ycor, x.getXcor(),x.getYcor());
+     return (distance <= (radius/2) + (x.getRadius() / 2));
+ }
+       
+     
  
  public void move(){
    //while(true)
